@@ -19,7 +19,7 @@ const Main = () => {
             <Col lg="7">
               <Outlet></Outlet>
             </Col>
-            <Col lg="3">
+            <Col lg="3" className="d-none d-lg-block">
               <RightSIdeNav></RightSIdeNav>
             </Col>
           </Row>
