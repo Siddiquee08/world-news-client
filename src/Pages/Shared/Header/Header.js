@@ -9,9 +9,16 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider/AuthProvider";
 import LeftSideNav from "../LeftSideNav/LeftSideNav";
 import RightSIdeNav from "../RightSideNav/RightSIdeNav";
+import Button from "react-bootstrap/Button";
 
 const Header = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => console.error(error));
+  };
+
   return (
     <div className="mb-4">
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
@@ -39,9 +46,30 @@ const Header = () => {
               </NavDropdown>
             </Nav>
             <Nav>
-              <Nav.Link>Welcome,{user?.displayName}</Nav.Link>
-              <Nav.Link eventKey={2} href="#memes">
-                {user.photoURL ? (
+              <Nav.Link id="RouterNavLink">
+                {user?.uid ? (
+                  <>
+                    <span>Welcome, {user?.displayName}</span>
+                    <Button
+                      onClick={handleLogOut}
+                      className="ms-2"
+                      variant="primary"
+                      type="logout"
+                    >
+                      Logout
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Link className="me-3" to="/login">
+                      Login
+                    </Link>
+                    <Link to="/register">Register</Link>
+                  </>
+                )}
+              </Nav.Link>
+              <Nav.Link id="RouterNavLink" eventKey={2} href="#memes">
+                {user?.photoURL ? (
                   <Image
                     style={{ height: "30px" }}
                     roundedCircle
